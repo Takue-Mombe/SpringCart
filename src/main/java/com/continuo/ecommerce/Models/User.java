@@ -1,4 +1,4 @@
-package com.continuo.ecommerce.Models;
+package com.continuo.ecommerce.models;
 
 
 import com.continuo.ecommerce.Enums.Role;
@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public User() {
+    }
+
     public User(String email, String username, String password, String firstName, String lastName, Role role, boolean verified) {
         this.email = email;
         this.username = username;
@@ -52,12 +55,20 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     @Override
