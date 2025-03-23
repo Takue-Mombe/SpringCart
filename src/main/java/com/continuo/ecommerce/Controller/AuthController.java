@@ -1,8 +1,12 @@
 package com.continuo.ecommerce.Controller;
 
+import com.continuo.ecommerce.DTO.LoginRequest;
 import com.continuo.ecommerce.DTO.RegisterRequest;
 import com.continuo.ecommerce.Enums.Role;
+import com.continuo.ecommerce.Response.AuthResponse;
 import com.continuo.ecommerce.Services.AuthService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.webauthn.api.AuthenticatorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,5 +29,10 @@ public class AuthController {
                 request.getLastName(),
                 request.getRole()
         );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 }

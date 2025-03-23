@@ -25,7 +25,7 @@ public class JWTUtil {
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
-    private String extractEmail(String token) {
+    String extractEmail(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
                 .parseClaimsJws(token)
                 .getBody().getSubject();

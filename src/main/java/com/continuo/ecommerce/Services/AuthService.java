@@ -1,11 +1,15 @@
 package com.continuo.ecommerce.Services;
 
 
+import com.continuo.ecommerce.DTO.LoginRequest;
 import com.continuo.ecommerce.Enums.Role;
 import com.continuo.ecommerce.Models.User;
 import com.continuo.ecommerce.Repository.UserRepository;
+import com.continuo.ecommerce.Response.AuthResponse;
 import com.continuo.ecommerce.Security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,4 +52,22 @@ public class AuthService {
         return jwtUtil.generateToken(email);
 
     }
+
+    public AuthResponse login(LoginRequest loginRequest) {
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword())
+            );
+            User user = userRepository.findByEmail(loginRequest.getEmail())
+                    .orElseThrow(()->new RuntimeException("User Not Found"));
+
+            String token = jwtUtil.generateToken(user.getEmail());
+            return new AuthResponse(token,user.getRole().name());
+
+        }catch (BadCredentialsException e){
+            throw new BadCredentialsException("Bad Credentials");
+        }
+    }
+
+
 }
