@@ -23,8 +23,8 @@ public class AuthController {
     public String register(@RequestBody RegisterRequest request) {
         return authService.registerUser(
                 request.getEmail(),
-                request.getPassword(),
                 request.getUsername(),
+                request.getPassword(),
                 request.getFirstName(),
                 request.getLastName(),
                 request.getRole()
