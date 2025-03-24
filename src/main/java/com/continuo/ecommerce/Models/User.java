@@ -30,11 +30,23 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     private boolean verified;
+    private String profilePicture;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     public User() {
+    }
+
+    public User(String email, String username, String password, String firstName, String lastName,String profilePicture, Role role, boolean verified) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+        this.role = role;
+        this.verified = verified;
     }
 
     public User(String email, String username, String password, String firstName, String lastName, Role role, boolean verified) {
@@ -63,6 +75,21 @@ public class User implements UserDetails {
         return username;
     }
 
+    public String setUsername(String username) {
+        return this.username = username;
+    }
+    public String setPassword(String password) {
+        return this.password = password;
+    }
+    public String setFirstName(String firstName) {
+        return this.firstName;
+    }
+    public String setLastName(String lastName) {
+        return this.lastName;
+    }
+    public String setProfilePicture(String profilePicture) {
+        return this.profilePicture = profilePicture;
+    }
     public String getEmail() {
         return email;
     }
@@ -99,6 +126,7 @@ public class User implements UserDetails {
         private String password;
         private String firstName;
         private String lastName;
+
         private Role role;
         private boolean verified;
 
