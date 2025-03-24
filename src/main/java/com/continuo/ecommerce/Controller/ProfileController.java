@@ -1,6 +1,7 @@
 package com.continuo.ecommerce.Controller;
 
 
+import com.continuo.ecommerce.DTO.UpdateProfileRequest;
 import com.continuo.ecommerce.Services.ProfileService;
 import com.continuo.ecommerce.models.User;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,8 @@ public class ProfileController {
 
     @PutMapping("/{email}")
     public ResponseEntity<User> updateProfile(@PathVariable String email,
-                                              @RequestParam String  username,
-                                              @RequestParam String firstName,
-                                              @RequestParam String lastName) {
-        return ResponseEntity.ok(profileService.updateUserProfile(email, username, firstName, lastName));
+                                              @RequestBody UpdateProfileRequest updateProfileRequest) {
+        return ResponseEntity.ok(profileService.updateUserProfile(email, updateProfileRequest));
     }
 
     @PutMapping("/{email}/changer-password")

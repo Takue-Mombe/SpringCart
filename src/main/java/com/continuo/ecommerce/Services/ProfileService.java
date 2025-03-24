@@ -1,6 +1,7 @@
 package com.continuo.ecommerce.Services;
 
 
+import com.continuo.ecommerce.DTO.UpdateProfileRequest;
 import com.continuo.ecommerce.Repository.UserRepository;
 import com.continuo.ecommerce.models.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,13 +29,15 @@ public class ProfileService {
                 .orElseThrow(()-> new RuntimeException("User not found"));
     }
 
-    public User updateUserProfile(String email, String username,String firstName, String lastName) {
+    public User updateUserProfile(String email, UpdateProfileRequest updateProfileRequest) {
 
-        User user = getUserProfile(email);
+        User user = userRepository.findByEmail(email)
+                        .orElseThrow(()-> new RuntimeException("User not found"));
 
-        user.setUsername(username);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+
+        user.setUsername(updateProfileRequest.getUsername());
+        user.setFirstName(updateProfileRequest.getFirstName());
+        user.setLastName(updateProfileRequest.getLastName());
 
         return userRepository.save(user);
     }
