@@ -76,7 +76,7 @@ public class ProductController {
 
         Pageable pageable= PageRequest.of(page,size,sortOrder);
 
-        Page<Products> filtered =productService.filterProducts(category,minPrice,maxPrice,available, (java.awt.print.Pageable) pageable);
+        Page<Products> filtered =productService.filterProducts(category,minPrice,maxPrice,available, pageable);
         return ResponseEntity.ok(filtered);
     }
 
