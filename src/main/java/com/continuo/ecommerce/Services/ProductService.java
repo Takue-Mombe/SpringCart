@@ -6,13 +6,16 @@ import com.continuo.ecommerce.Repository.ProductRepository;
 import com.continuo.ecommerce.Repository.UserRepository;
 import com.continuo.ecommerce.models.Products;
 import com.continuo.ecommerce.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ProductService {
+public abstract class ProductService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
@@ -43,11 +46,14 @@ public class ProductService {
 
     }
 
-    public Products updateProduct(Long productId, ProductDTO productDTO) {
+    public Products updateProduct(Long productId,String vendorEmail, ProductDTO productDTO) {
 
         Products products =productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
+        if (!products.getVendor().getEmail().equals(vendorEmail)) {
+            throw new AccessDeniedException("You can only update your own products.");
+        }
         products.setName(productDTO.getName());
         products.setDescription(productDTO.getDescription());
         products.setPrice(productDTO.getPrice());
@@ -69,4 +75,7 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
     }
+
+
+    public abstract Page<Products> filterProducts(String category, Double minPrice, Double maxPrice, Boolean available, Pageable pageable);
 }
