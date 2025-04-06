@@ -30,7 +30,7 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.updateUserProfile(email, updateProfileRequest));
     }
 
-    @PutMapping("/{email}/changer-password")
+    @PutMapping("/{email}/change-password")
     public ResponseEntity<String>changePassword(
             @PathVariable String email,
             @RequestParam String oldPassword,
