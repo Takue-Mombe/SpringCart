@@ -8,10 +8,10 @@ import com.continuo.ecommerce.models.Products;
 import com.continuo.ecommerce.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
-
+ 
     @Override
     public List<Products> getAllProducts() {
         return productRepository.findAll();
@@ -83,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Products> filterProducts(String category, Double minPrice, Double maxPrice, Boolean available, org.springframework.data.domain.Pageable pageable) {
+    public Page<Products> filterProducts(String category, Double minPrice, Double maxPrice, Boolean available, Pageable pageable) {
         // Implement your filter logic here
         return productRepository.findAll(pageable); // placeholder
     }
